@@ -1,6 +1,4 @@
 name: Validate DAB
-  working-directory: dabProject_r
-  run: databricks bundle validate -t dev
 
 on:
   pull_request:
@@ -17,4 +15,5 @@ jobs:
       - uses: databricks/setup-cli@main
 
       - name: Validate Bundle
-        run: databricks bundle validate
+        working-directory: dabProject_r
+        run: databricks bundle validate -t dev
