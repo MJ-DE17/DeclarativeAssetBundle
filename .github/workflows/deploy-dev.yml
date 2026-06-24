@@ -1,0 +1,33 @@
+name: Deploy DAB Dev
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Validate Bundle
+        working-directory: dabProject_r
+        run: databricks bundle validate -t dev
+
+      - name: Deploy Bundle
+        working-directory: dabProject_r
+        run: databricks bundle deploy -t dev
+      
+      - name: Run Job
+        working-directory: dabProject_r
+        run: databricks bundle run sales_dab_job -t dev
