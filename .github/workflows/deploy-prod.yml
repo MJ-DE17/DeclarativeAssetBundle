@@ -1,4 +1,4 @@
-name: Deploy DAB Prod
+ame: Deploy DAB Prod
 
 on:
   workflow_dispatch:
