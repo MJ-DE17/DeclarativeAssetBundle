@@ -18,6 +18,5 @@ jobs:
 
       - uses: databricks/setup-cli@main
 
-      - name: Validate Bundle
-        working-directory: dabProject_r
+      - working-directory: dabProject_r
         run: databricks bundle validate -t dev
