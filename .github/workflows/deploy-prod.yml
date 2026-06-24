@@ -1,0 +1,31 @@
+name: Deploy DAB Prod
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_PROD }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_PROD }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Validate Bundle
+        working-directory: dabProject_r
+        run: databricks bundle validate -t prod
+
+      - name: Deploy Bundle
+        working-directory: dabProject_r
+        run: databricks bundle deploy -t prod
+
+      - name: Run Job
+        working-directory: dabProject_r
+        run: databricks bundle run sales_dab_job -t prod
