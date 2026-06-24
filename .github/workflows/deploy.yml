@@ -1,4 +1,6 @@
 name: Validate DAB
+  working-directory: dabProject_r
+  run: databricks bundle validate -t dev
 
 on:
   pull_request:
